@@ -6,3 +6,5 @@
 1. Run the `main.py` file
 
 ## `The project is in starting phase. It may contain bugs`
+
+### I have been busy with another project. This project will be continued soon.
