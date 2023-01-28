@@ -8,8 +8,8 @@
 """main File created on 26-01-2023"""
 
 from prompt_toolkit import Application
-from prompt_toolkit.keys import Keys
 from prompt_toolkit.key_binding import KeyBindings
+from prompt_toolkit.keys import Keys
 from prompt_toolkit.layout.containers import HSplit, VSplit
 from prompt_toolkit.layout.layout import Layout
 
