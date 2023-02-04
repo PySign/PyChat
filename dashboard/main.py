@@ -6,6 +6,8 @@
 # @File    : main.py
 
 """main File created on 26-01-2023"""
+import json
+from threading import Thread
 
 from prompt_toolkit import Application
 from prompt_toolkit.key_binding import KeyBindings
@@ -34,6 +36,9 @@ class Dashboard(Application):
         self.set_layout()
         self.set_key_bind()
 
+        self.socket = None
+        self.close_engine = None
+
     def create_layout(self):
         """Implemented Dashboard.create_layout"""
         self.__layout = VSplit(
@@ -61,11 +66,25 @@ class Dashboard(Application):
                     self.__screen_area.clear()
                 elif buffer in ['exit', 'quit', 'q']:
                     self.exit()
+                    self.close_engine()
             else:
                 message = self.__message_box.message
                 self.__screen_area.send(message)
+                self.socket.send(buffer)
 
     def set_key_bind(self):
         """Implemented Dashboard.set_key_bind"""
         self.key_bindings.add(Keys.Enter)(lambda _: self.process_message())
         self.key_bindings.add(Keys.ControlQ)(lambda event: event.app.exit())
+
+    def message_handler(self, _, message):
+        """Implemented message_handler in Dashboard"""
+        message = json.loads(message)
+        if message['topic'] == 'msg':
+            self.__screen_area.recieve(message)
+
+    def start_handler(self, socket):
+        """Implemented start_handler in Dashboard"""
+        self.socket = socket
+        t = Thread(target=self.run, daemon=True)
+        t.start()

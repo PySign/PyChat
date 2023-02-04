@@ -30,5 +30,9 @@ class ScreenArea(Frame):
         """Display message as sent"""
         self.__screen.text += message
 
-    def recieve(self):
+    def recieve(self, data: dict):
         """Display a recieved message"""
+        user = data['user']
+        message = data['message']
+        content = f'{user}$ {message}\n'
+        self.__screen.text += content

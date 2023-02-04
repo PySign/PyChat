@@ -38,7 +38,7 @@ class MessageBox(Frame):
     def message(self) -> str:
         """Get the message from messagebox"""
         text = self.buffer
-        prefix = '$ '
+        prefix = 'root$ '
         message = f'{prefix}{text}\n'
         self.clear()
         return message
