@@ -7,7 +7,6 @@
 
 """main File created on 26-01-2023"""
 import json
-from threading import Thread
 
 from prompt_toolkit import Application
 from prompt_toolkit.key_binding import KeyBindings
@@ -37,7 +36,6 @@ class Dashboard(Application):
         self.set_key_bind()
 
         self.socket = None
-        self.close_engine = None
 
     def create_layout(self):
         """Implemented Dashboard.create_layout"""
@@ -66,7 +64,6 @@ class Dashboard(Application):
                     self.__screen_area.clear()
                 elif buffer in ['exit', 'quit', 'q']:
                     self.exit()
-                    self.close_engine()
             else:
                 message = self.__message_box.message
                 self.__screen_area.send(message)
@@ -86,5 +83,3 @@ class Dashboard(Application):
     def start_handler(self, socket):
         """Implemented start_handler in Dashboard"""
         self.socket = socket
-        t = Thread(target=self.run, daemon=True)
-        t.start()
